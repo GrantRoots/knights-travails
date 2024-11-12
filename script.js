@@ -25,65 +25,49 @@ function knightMoves(start, finish) {
         if ((current[0] + 1) > 7 || (current[1] + 2) > 7) {
             return null
         }
-        let newX = current[0] + 1
-        let newY = current[1] + 2
-        return [newX, newY]
+        return [current[0] + 1, current[1] + 2]
     }
     function upTwoLeft(current) {
         if ((current[0] - 1) < 0 || (current[1] + 2) > 7) {
             return null
         }
-        current[0] -= 1
-        current[1] += 2
-        return current
+        return [current[0] - 1, current[1] + 2]
     }
     function downTwoRight(current) {
         if ((current[0] + 1) > 7 || (current[1] - 2) < 0) {
             return null
         }
-        current[0] += 1
-        current[1] -= 2
-        return current
+        return [current[0] + 1, current[1] - 2]
     }
     function downTwoLeft(current) {
         if ((current[0] - 1) < 0 || (current[1] - 2) < 0) {
             return null
         }
-        current[0] -= 1
-        current[1] -= 2
-        return current
+        return [current[0] - 1, current[1] - 2]
     }
     function rightTwoUp(current) {
         if ((current[0] + 2) > 7 || (current[1] + 1) > 7) {
             return null
         }
-        current[0] += 2
-        current[1] += 1
-        return current
+        return [current[0] + 2, current[1] + 1]
     }
     function rightTwoDown(current) {
         if ((current[0] + 2) > 7 || (current[1] - 1) < 0) {
             return null
         }
-        current[0] += 2
-        current[1] -= 1
-        return current
+        return [current[0] += 2, current[1] -= 1]
     }
     function leftTwoUp(current) {
         if ((current[0] - 2) < 0 || (current[1] + 1) > 7) {
             return null
         }
-        current[0] -= 2
-        current[1] += 1
-        return current
+        return [current[0] - 2, current[1] + 1]
     }
     function leftTwoDown(current) {
         if ((current[0] - 2) < 0 || (current[1] - 2) < 0) {
             return null
         }
-        current[0] -= 2
-        current[1] -= 2
-        return current
+        return [current[0] - 2, current[1] - 2]
     }
     // number of moves = array.length - 1
 
@@ -106,16 +90,17 @@ function knightMoves(start, finish) {
             allMoves(currentArray)
         }
 
-        upTwoLeft(current)
-        downTwoRight(current)
-        downTwoLeft(current)
-        rightTwoUp(current)
-        rightTwoDown(current)
-        leftTwoUp(current)
-        leftTwoDown(current)
+        // upTwoLeft(current)
+        // downTwoRight(current)
+        // downTwoLeft(current)
+        // rightTwoUp(current)
+        // rightTwoDown(current)
+        // leftTwoUp(current)
+        // leftTwoDown(current)
     }
 
     allMoves([start])
+    console.log(foundArrays)
 
     //find shortest array in foundArrays
 }
