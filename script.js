@@ -1,7 +1,7 @@
 #!/usr/bin/node
 
 function knightMoves(start, finish) {
-    if (typeof start !== 'array' || typeof finish !== 'array') {
+    if (Array.isArray(start) === false || Array.isArray(finish) === false) {
         throw Error('start/finish must be an array')
     }
     if (start.length !== 2 || finish.length !== 2) {
@@ -11,8 +11,6 @@ function knightMoves(start, finish) {
     //output each coordinate from start to finish
 
     //knight moves up/down 1 left/right 2 or up/down 2 left/right 1
-    //count each move
-    let moves = 0
 
     //store each possible move in an array from starting at start point
     //then each second possible move in array from first move point
@@ -21,9 +19,9 @@ function knightMoves(start, finish) {
 
     //then if one hits the target compare the number of moves between them
     // return the lowst number of moves
-    let current = start
     function upTwoRight(current) {
-        if ((current[0] += 1) > 7 || (current[1] += 2) > 7) {
+        console.log(current, 'in uptworight')
+        if ((current[0] + 1) > 7 || (current[1] + 2) > 7) {
             return null
         }
         current[0] += 1
@@ -31,7 +29,7 @@ function knightMoves(start, finish) {
         return current
     }
     function upTwoLeft(current) {
-        if ((current[0] -= 1) < 0 || (current[1] += 2) > 7) {
+        if ((current[0] - 1) < 0 || (current[1] + 2) > 7) {
             return null
         }
         current[0] -= 1
@@ -39,7 +37,7 @@ function knightMoves(start, finish) {
         return current
     }
     function downTwoRight(current) {
-        if ((current[0] += 1) > 7 || (current[1] -= 2) < 0) {
+        if ((current[0] + 1) > 7 || (current[1] - 2) < 0) {
             return null
         }
         current[0] += 1
@@ -47,7 +45,7 @@ function knightMoves(start, finish) {
         return current
     }
     function downTwoLeft(current) {
-        if ((current[0] -= 1) < 0 || (current[1] -= 2) < 0) {
+        if ((current[0] - 1) < 0 || (current[1] - 2) < 0) {
             return null
         }
         current[0] -= 1
@@ -55,7 +53,7 @@ function knightMoves(start, finish) {
         return current
     }
     function rightTwoUp(current) {
-        if ((current[0] += 2) > 7 || (current[1] += 1) > 7) {
+        if ((current[0] + 2) > 7 || (current[1] + 1) > 7) {
             return null
         }
         current[0] += 2
@@ -63,7 +61,7 @@ function knightMoves(start, finish) {
         return current
     }
     function rightTwoDown(current) {
-        if ((current[0] += 2) > 7 || (current[1] -= 1) < 0) {
+        if ((current[0] + 2) > 7 || (current[1] - 1) < 0) {
             return null
         }
         current[0] += 2
@@ -71,7 +69,7 @@ function knightMoves(start, finish) {
         return current
     }
     function leftTwoUp(current) {
-        if ((current[0] -= 2) < 0 || (current[1] += 1) > 7) {
+        if ((current[0] - 2) < 0 || (current[1] + 1) > 7) {
             return null
         }
         current[0] -= 2
@@ -79,7 +77,7 @@ function knightMoves(start, finish) {
         return current
     }
     function leftTwoDown(current) {
-        if ((current[0] -= 2) < 0 || (current[1] -= 2) < 0) {
+        if ((current[0] - 2) < 0 || (current[1] - 2) < 0) {
             return null
         }
         current[0] -= 2
@@ -88,34 +86,55 @@ function knightMoves(start, finish) {
     }
     // number of moves = array.length - 1
 
-    let originalArray = [current]
+    let foundArrays = []
+    //make an array of arrays??
+    //[[4,4, 5,5][4,4, 5,5][4,4, 5,5][4,4, 5,5][4,4, 5,5][4,4, 5,5][4,4, 5,5][4,4, 5,5]]
+
     //make 8 arrays from original array (or as many as possible)
     //repeat until found
 
-    function allMoves(current) {
-        let arrayOne = originalArray.push(upTwoRight(current))
-        upTwoLeft(current)
-        downTwoRight(current)
-        downTwoLeft(current)
-        rightTwoUp(current)
-        rightTwoDown(current)
-        leftTwoUp(current)
-        leftTwoDown(current)
-
-        if (current === finish) {
-            //count all and find the lowest moves
-            //return full array with paths
+    function allMoves(currentArray) {
+        //would it be this for all of them?
+        console.log(currentArray, 'first passed array')
+        if (upTwoRight(currentArray[currentArray.length - 1]) !== null) {
+            console.log(currentArray[currentArray.length - 1], 'should be 0,0')
+            currentArray.push(currentArray[currentArray.length - 1])
+            console.log(currentArray, 'current array in loop')
+            if (upTwoRight(currentArray[currentArray.length - 1]) === finish) {
+                currentArray.push(upTwoRight(currentArray[currentArray.length - 1]))
+                foundArrays.push(currentArray)
+                return
+            }
+            //make new arrays with this array
+            console.log(currentArray)
+            allMoves(currentArray)
         }
+        console.log('didnt work')
+
+        // upTwoLeft(current)
+        // downTwoRight(current)
+        // downTwoLeft(current)
+        // rightTwoUp(current)
+        // rightTwoDown(current)
+        // leftTwoUp(current)
+        // leftTwoDown(current)
     }
+
+    let startingPoint = [start]
+    allMoves(startingPoint)
     //dont revisit a square?
+
+    //find shortest array in foundArrays
 }
 
-//      0  1  2  3  4  5  6  7
-// [ 0 [0, 0, 0, 0, 0, 0, 0, 0],
-//   1 [0, 0, 0, 0, 0, 0, 0, 0],
-//   2 [0, 0, 0, 0, 0, 0, 0, 0],
-//   3 [0, 0, 0, 0, 0, 0, 0, 0],
-//   4 [0, 0, 0, X, 0, 0, 0, 0],
-//   5 [0, 0, 0, 0, 1, 0, 0, 0],
+knightMoves([0, 0], [2, 4])
+
+// [ 7 [0, 0, 0, 0, 0, 0, 0, 0],
 //   6 [0, 0, 0, 0, 0, 0, 0, 0],
-//   7 [0, 0, 0, 0, 0, 0, 0, 0], ]
+//   5 [0, 0, 0, 0, 0, 0, 0, 0],
+//   4 [0, 0, 0, 0, 0, 0, 0, 0],
+//   3 [0, 0, 0, X, 0, 0, 0, 0],
+//   2 [0, 0, 0, 0, 1, 0, 0, 0],
+//   1 [0, 0, 0, 0, 0, 0, 0, 0],
+//   0 [0, 0, 0, 0, 0, 0, 0, 0], ]
+//      0  1  2  3  4  5  6  7
