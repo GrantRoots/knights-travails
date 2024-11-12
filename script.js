@@ -19,14 +19,15 @@ function knightMoves(start, finish) {
 
     //then if one hits the target compare the number of moves between them
     // return the lowst number of moves
+
+    //all moving functions
     function upTwoRight(current) {
-        console.log(current, 'in uptworight')
         if ((current[0] + 1) > 7 || (current[1] + 2) > 7) {
             return null
         }
-        current[0] += 1
-        current[1] += 2
-        return current
+        let newX = current[0] + 1
+        let newY = current[1] + 2
+        return [newX, newY]
     }
     function upTwoLeft(current) {
         if ((current[0] - 1) < 0 || (current[1] + 2) > 7) {
@@ -94,35 +95,27 @@ function knightMoves(start, finish) {
     //repeat until found
 
     function allMoves(currentArray) {
-        //would it be this for all of them?
-        console.log(currentArray, 'first passed array')
+
         if (upTwoRight(currentArray[currentArray.length - 1]) !== null) {
-            console.log(currentArray[currentArray.length - 1], 'should be 0,0')
-            currentArray.push(currentArray[currentArray.length - 1])
-            console.log(currentArray, 'current array in loop')
-            if (upTwoRight(currentArray[currentArray.length - 1]) === finish) {
-                currentArray.push(upTwoRight(currentArray[currentArray.length - 1]))
+            currentArray.push(upTwoRight(currentArray[currentArray.length - 1]))
+            if (currentArray[currentArray.length - 1][0] === finish[0] && currentArray[currentArray.length - 1][1] === finish[1]) {
                 foundArrays.push(currentArray)
                 return
             }
             //make new arrays with this array
-            console.log(currentArray)
             allMoves(currentArray)
         }
-        console.log('didnt work')
 
-        // upTwoLeft(current)
-        // downTwoRight(current)
-        // downTwoLeft(current)
-        // rightTwoUp(current)
-        // rightTwoDown(current)
-        // leftTwoUp(current)
-        // leftTwoDown(current)
+        upTwoLeft(current)
+        downTwoRight(current)
+        downTwoLeft(current)
+        rightTwoUp(current)
+        rightTwoDown(current)
+        leftTwoUp(current)
+        leftTwoDown(current)
     }
 
-    let startingPoint = [start]
-    allMoves(startingPoint)
-    //dont revisit a square?
+    allMoves([start])
 
     //find shortest array in foundArrays
 }
