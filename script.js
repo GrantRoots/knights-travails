@@ -72,6 +72,7 @@ function knightMoves(start, finish) {
     // number of moves = array.length - 1
 
     let foundArrays = []
+    let found = false
     //make an array of arrays??
     //[[4,4, 5,5][4,4, 5,5][4,4, 5,5][4,4, 5,5][4,4, 5,5][4,4, 5,5][4,4, 5,5][4,4, 5,5]]
 
@@ -79,18 +80,29 @@ function knightMoves(start, finish) {
     //repeat until found
 
     function allMoves(currentArray) {
-
         if (upTwoRight(currentArray[currentArray.length - 1]) !== null) {
-            currentArray.push(upTwoRight(currentArray[currentArray.length - 1]))
-            if (currentArray[currentArray.length - 1][0] === finish[0] && currentArray[currentArray.length - 1][1] === finish[1]) {
-                foundArrays.push(currentArray)
+            let newArray = currentArray.slice([0])
+            newArray.push(upTwoRight(newArray[newArray.length - 1]))
+            if (newArray[newArray.length - 1][0] === finish[0] && newArray[newArray.length - 1][1] === finish[1]) {
+                foundArrays.push(newArray)
+                return null
+            }
+            //make new arrays with this array
+            allMoves(newArray)
+        }
+
+        //make sure this doesnt change other array
+        if (upTwoLeft(currentArray[currentArray.length - 1]) !== null) {
+            let newArray = currentArray.slice()
+            newArray.push(upTwoLeft(newArray[newArray.length - 1]))
+            if (newArray[newArray.length - 1][0] === finish[0] && newArray[newArray.length - 1][1] === finish[1]) {
+                foundArrays.push(newArray)
                 return
             }
             //make new arrays with this array
-            allMoves(currentArray)
+            allMoves(newArray)
         }
 
-        // upTwoLeft(current)
         // downTwoRight(current)
         // downTwoLeft(current)
         // rightTwoUp(current)
@@ -100,12 +112,12 @@ function knightMoves(start, finish) {
     }
 
     allMoves([start])
-    console.log(foundArrays)
+    console.log(foundArrays, 'found arrays')
 
     //find shortest array in foundArrays
 }
 
-knightMoves([0, 0], [2, 4])
+knightMoves([0, 0], [0, 4])
 
 // [ 7 [0, 0, 0, 0, 0, 0, 0, 0],
 //   6 [0, 0, 0, 0, 0, 0, 0, 0],
