@@ -214,17 +214,17 @@ function knightMoves(start, finish) {
                 allMoves(newArray, newVisited)
             }
         }
-        console.log('what happens here')
     }
 
     allMoves([start], [])
-    console.log(foundArrays, 'found arrays')
+    //console.log(foundArrays, 'found arrays')
 
     //find shortest array in foundArrays
     foundArrays = foundArrays.sort(function(a, b) {
         return a.length - b.length
     })
-    return foundArrays[0]
+    let userMessage = `You made it in ${foundArrays[0].length} moves. Heres your path ${foundArrays[0]}`
+    return userMessage
 }
 
 console.log(knightMoves([0, 0], [7, 7]))
