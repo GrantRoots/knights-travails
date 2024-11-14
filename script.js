@@ -62,7 +62,7 @@ function knightMoves(start, finish) {
 
     function allMoves(currentArray, visitedSquares) {
         //to save time
-        if (currentArray.length > 5) {
+        if (currentArray.length > 7) {
             return
         }
 
@@ -221,10 +221,13 @@ function knightMoves(start, finish) {
     console.log(foundArrays, 'found arrays')
 
     //find shortest array in foundArrays
-    foundArrays
+    foundArrays = foundArrays.sort(function(a, b) {
+        return a.length - b.length
+    })
+    return foundArrays[0]
 }
 
-knightMoves([3, 4], [6, 1])
+console.log(knightMoves([0, 0], [7, 7]))
 
 // [ 7 [0, 0, 0, 0, 0, 0, 0, 0],
 //   6 [0, 0, 0, 0, 0, 0, 0, 0],
